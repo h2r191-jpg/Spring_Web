@@ -34,8 +34,11 @@ public class PostService {
         return repository.save(post);
     }
 
-    // Удаляет Post по идентификатору
+    // Удаляет Post по идентификатору или исключение если не найден
     public void removeById(long id) {
+        if (repository.getById(id).isEmpty()) {
+            throw new NotFoundException("Пост с id=" + id + " не найден");
+        }
         repository.removeById(id);
     }
 }
